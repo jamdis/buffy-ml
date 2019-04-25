@@ -7,3 +7,5 @@ from .hulu import *
 from .youtube import *
 from .watchonline import *
 from .buffyguide import *
+from .tvmaze import *
+from .simplewikipedia import *
