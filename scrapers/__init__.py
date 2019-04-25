@@ -9,3 +9,4 @@ from .watchonline import *
 from .buffyguide import *
 from .tvmaze import *
 from .simplewikipedia import *
+from .tvguide import *
