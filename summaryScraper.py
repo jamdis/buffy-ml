@@ -29,7 +29,7 @@ def getAllSummaries():
 	#addSummaries(scrapers.getITunesSummaries())
 	#addSummaries(scrapers.getHuluSummaries())
 	#addSummaries(scrapers.getYouTubeSummaries())
-	scrapers.getWatchOnlineSummaries()
+	addSummaries(scrapers.getWatchOnlineSummaries())
 	
 	#addSummaries(scrapers.getAmazonSummaries())
 getAllSummaries()

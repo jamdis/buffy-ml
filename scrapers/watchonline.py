@@ -1,6 +1,8 @@
 import requests
 import re
 import sneakyrequest
+from bs4 import BeautifulSoup
+import time
 
 def getWatchOnlineSummaries():
 	'''
@@ -16,14 +18,25 @@ def getWatchOnlineSummaries():
 	4. repeat for all seasons.
 	
 	'''
+	summaries = []
 	
-	r = requests.get('https://www.watchonline.guide/tv-shows/buffy-the-vampire-slayer-1997/1/episodes/1.js?page_load_id=64598325438511&template=episode_block&user_id=31117584590390&_=1555861519431')
-	page = r.text
-	page = page.replace("\\","")
-	#summaries = re.findall("<div class=.'season-episode__list-content-description.'>.n[^\{\}\[\]]*.n<./div>",page)	
+	
+	for season in range (1,8):
+		for part in range (1,3):
+			print ("WatchOnine: Getting season %i, part %i..." % (season, part))
+			r = requests.get('https://www.watchonline.guide/tv-shows/buffy-the-vampire-slayer-1997/%i/episodes/%i.js?page_load_id=64598325438511&template=episode_block&user_id=31117584590390&_=1555861519431' %(season, part))
+			time.sleep(3)
+			page = r.text
+			page = page.replace("\\","")
+	
+			soup = BeautifulSoup(page,'html.parser')
+	
+			episodes = soup.find_all('div',{'class':'season-episode__list-content-description'})
+		
+			for episode in episodes:
+				summary = episode.get_text()
+				summaries.append(summary[1:-1])
+			print (summaries)
+	print ("WatchOline: Retrieved %i summaries" % len(summaries))
 
-	
-	print (page)
-	
-
-	
+	return summaries
