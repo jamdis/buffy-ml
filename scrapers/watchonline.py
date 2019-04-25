@@ -14,7 +14,7 @@ def getWatchOnlineSummaries():
 	Okay so we have to:
 	1. load the correct url.  insert the season number
 	2. do it again with a 2.js instead of 1.js to get the rest of the eps.
-	3. extract the episode data using regex
+	3. extract the episode data using beautiful soup
 	4. repeat for all seasons.
 	
 	'''
