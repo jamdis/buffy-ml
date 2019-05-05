@@ -36,7 +36,6 @@ def getWatchOnlineSummaries():
 			for episode in episodes:
 				summary = episode.get_text()
 				summaries.append(summary[1:-1])
-			print (summaries)
 	print ("WatchOline: Retrieved %i summaries" % len(summaries))
 
 	return summaries
