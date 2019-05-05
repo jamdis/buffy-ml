@@ -76,6 +76,6 @@ while True:
 	model.fit(x,y,batch_size=batch_size, verbose=1, epochs=1 )
 	nb_epoch +=1
 	generate_text(model, generate_length)
-	if nb_epoch % 10 == 0:
+	if nb_epoch % 2 == 0:
 		model.save_weights('checkpoint_%s_epoch_%s_.hdf5' % (hidden_dim, nb_epoch))
 
