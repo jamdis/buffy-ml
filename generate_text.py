@@ -1,20 +1,36 @@
+import sys
 import numpy as np
+import random
 from keras.models import Sequential, load_model
 from keras.layers.core import Dense, Activation, Dropout
 from keras.layers.recurrent import LSTM, SimpleRNN
 from keras.layers.wrappers import TimeDistributed
 
 
+generate_length = int(sys.argv[1]) #Number of chars to generate
+starter = sys.argv[2] 
+starters = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
 def generate_text(model, length):
-	ix = [vocab_size - 1]
-	y_char = [ix_to_char[ix[-1]]]
+	ix = []
+	for letter in list("|\n" + starter):
+		ix.append(char_to_ix[ letter ])
+	
+	#ix = [char_to_ix[ random.choice(starters) ]]
+	y_char = list(starter)
 	x = np.zeros((1, length, vocab_size))
 	for i in range(length):
+		
 		x[0, i, :][ix[-1]] = 1
 		print(ix_to_char[ix[-1]], end = "")
+		#ix = np.argmax(model.predict(x[:, :i+1, :])[0],1)
 		ix = np.argmax(model.predict(x[:, :i+1, :])[0],1)
-		y_char.append(ix_to_char[ix[-1]])
+		new_char = ix_to_char[ix[-1]]
+		y_char.append(new_char)
+		if new_char == "|":
+			break
 	return('').join(y_char)
+
 
 data = open("buffy-summaries.txt", 'r').read()
 chars = list(set(data))
@@ -28,7 +44,7 @@ hidden_dim = 500
 seq_length = 50
 layer_num = 3
 batch_size = 50
-generate_length = 50000
+
 
 #######PREPARE THE TRAINING DATA ###########
 
@@ -67,10 +83,12 @@ for i in range(layer_num - 1):
 model.add(TimeDistributed(Dense(vocab_size)))
 model.add(Activation('softmax'))
 model.compile(loss="categorical_crossentropy", optimizer="rmsprop")
-model.load_weights('checkpoint_500_epoch_120_.hdf5')
+model.load_weights('checkpoint_500_epoch_62_.hdf5')
 
+while True:
+	text = generate_text(model, generate_length)
 
-text = generate_text(model, generate_length)
-
-print (text)
+	print (text)
+	with open("output.txt", 'a') as file:
+		file.write(text)
 
