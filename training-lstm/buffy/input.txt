@@ -1,1 +1,1 @@
-buffy-summaries.txt
+../../buffy-summaries.txt
