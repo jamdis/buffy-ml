@@ -56,7 +56,8 @@ def generate_text(model, length,starter):
 				preview = preview[cols * -1 :]
 			print("\r" + preview ,end = "\r")
 		except:
-			print(preview)
+			if i % 20 == 0:
+				print(preview)
 				
 	return('').join(y_char)
 
@@ -65,10 +66,6 @@ def loadText():
 	return data
 
 def recreateNetwork():
-
-
-	
-
 	layer_num = 3
 	hidden_dim = 500
 
