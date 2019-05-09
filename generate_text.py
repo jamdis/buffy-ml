@@ -50,11 +50,13 @@ def generate_text(model, length,starter):
 		preview = ('').join(y_char)
 		preview = preview.replace('\n', ' ').replace('\r', '')
 		preview = preview + status_message
-		cols, rows = os.get_terminal_size()
-		if len(preview) > cols:
-			preview = preview[cols * -1 :]
-		print("\r" + preview ,end = "\r")
-		#print("\r" + status_message ,end = "\r")
+		try:
+			cols, rows = os.get_terminal_size()
+			if len(preview) > cols:
+				preview = preview[cols * -1 :]
+			print("\r" + preview ,end = "\r")
+		except:
+			print(preview)
 				
 	return('').join(y_char)
 
